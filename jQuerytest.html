@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>jQueryの練習</title>
+  <style>
+    .myStyle {
+      border: 5px solid green;
+      font-size: 48px;
+    }
+  </style>
+</head>
+<body>
+  <h1>タイトル</h1>
+  <p>jQueryの練習</p>
+
+  <div id="box" style="width:100px;height:100px;background:red;"></div>
+  <!-- 四角の赤い箱を出す -->
+  <div id="box2" style="width:100px;height:100px;background:blue;"></div>
+
+  <ul id="main">
+    <li>0</li>
+    <li class="item">1</li>
+    <li class="item">2</li>
+    <li>
+      3
+      <ul id="sub">
+        <li>3-0</li>
+        <li>3-1</li>
+        <li class="item">3-2</li>
+        <li class="item">3-3</li>
+        <li class="item">3-4</li>
+        <li>3-5</li>
+      </ul>
+    </li>
+  </ul>
+  <ul id="main2">
+    <li>0</li>
+    <li class="item2">1</li>
+    <li class="item2">2</li>
+    <li>
+      3
+      <ul id="sub2">
+        <li>3-0</li>
+        <li>3-1</li>
+        <li class="item2">3-2</li>
+        <li class="item2">3-3</li>
+        <li class="item2">3-4</li>
+        <li>3-5</li>
+      </ul>
+    </li>
+  </ul>
+  <ul id="main3">
+    <li>0</li>
+    <li class="item3">1</li>
+    <li class="item3">2</li>
+    <li>
+      3
+      <ul id="sub3">
+        <li>3-0</li>
+        <li>3-1</li>
+        <li class="item3">3-2</li>
+        <li class="item3">3-3</li>
+        <li class="item3">3-4</li>
+        <li>3-5</li>
+      </ul>
+    </li>
+  </ul>
+  <p><a href="http://google.com" data-sitename="google">Google</a></p>
+  <p><a href="http://yahoo.co.jp">Yahoo!</a></p>
+  <p><a href="http://dotinstall.com">Dotinstall</a></p>
+  <p><a href="http://github.com">Github</a></p>
+  <p><a href="http://www.youtube.com">YouTube</a></p>
+
+  <h2>あああああああ</h2>
+  <h3>いいいいいいい</h3>
+  <input type="text" value="hello">
+  <h4>ううううううう</h4>
+
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script>
+    $(function() {
+      // セレクタ：処理対象となるDOM要素を指定する記法
+      // メソッド：処理
+      // $("")
+      // html要素 p, h1, ul
+      // $("p").css('color','red').hide('slow'); // p要素を文字を赤にしてゆっくり消す
+      // セレクタ.メソッド メソッドチェーン
+      // idは#を付ける #main
+      // classは.を付ける .item
+
+      $("#sub").css('color','skyblue'); // idのsub要素の文字を空色
+      // $('.item').css('color','violet'); classのitem要素の文字を紫
+      // > 直下の子要素
+      // 半角スペース それ以下の要素
+      // , 複数の要素
+      // + 隣接する要素
+      $('#main > .item').css('color','red'); // mainの下のclass .itemの文字を赤
+                                             // subの下のitem要素は影響を受けない
+      // $("#main .item").css('color','blue'); main以下のitem要素の文字を青
+      $("p, .item").css('color','green'); // p要素とitem要素の文字を緑
+      $(".item + .item").css('color','red'); // item要素の隣のitemを赤
+      // 最初のitem要素は効果を受けないが、後のitem要素に続けて効果を与える
+      // 実行結果
+      // item x
+      // item ○
+      // item ○
+
+      // フィルタ
+      // :eq()
+      // :gt(), :lt()
+      // :even, :odd
+      // :contains()
+      // :first 一番上を選択
+      // :last 一番下を選択
+      $("#sub2 > li:first").css('color','skyblue'); // sub2リストの一番上を空色
+      $("#sub2 > li:eq(2)").css('color','pink'); // sub2のリストの3番目をピンク
+      // $("#sub2 > li:gt(2)").css('color','red'); // sub2のリストの4以下を赤
+      $("#sub2 > li:odd").css('color','blue'); // sub2のリストの奇数を青
+      // 0からなので見た目は偶数行を青色にしている
+      $("#sub2 > li:contains('4')").css('color','violet'); // リストの5番目を紫
+
+      // メソッドを使ったDOM要素の指定
+      // parent(), children() 親要素、子要素を指定
+      // next(), prev() 選択した要素の前後
+      // siblings() 兄弟要素
+      $("#sub3").parent().css('color','red'); // 親要素にcssメソッドを適用
+      // 親要素を選択 sub3のリストがすべて文字色赤
+      // 子要素だけを選択したい時は$("#sub3").children().css();
+      // $("#sub3 > li:eq(2)").next().css('color','blue');
+      // sub3の三番目の次(四番目)の文字色青
+      // $("#sub3 > li:eq(2)").prev().css('color','skyblue');
+      // sub3の三番目の前(二番目)の文字色空色
+      $("#sub3 > li:eq(2)").siblings().css('color','violet');
+      // 選択した子要素(三番目)以外を文字色紫
+
+      // 属性セレクタ
+      // = 等しい
+      // != 等しくない
+      // *= ○○を含む
+      // ^= 先頭から始まる
+      // $= 終わりと同じ
+      $('a[href="http://google.com"]').css('background','red');
+      // 選択したURLを持つ要素の文字の背景色を赤
+      $('a[href!="http://google.com"]').css('background','blue');
+      // google以外の背景色青
+      $('a[href*="www"]').css('background','pink');
+      // URLにwwwが含まれるものを背景色ピンク
+      $('a[href$="jp"]').css('background','green');
+      // jpで終わるものだけ背景色緑 Yahoo!
+
+      // .css 値の設定だけでなく取得もできる
+      $("h1").css('color','red').css('background', 'blue'); // h1文字赤、背景青
+      console.log($("h1").css('color')); // h1の文字色を取得 rgb(255, 0, 0)
+      $("h1").addClass('myStyle'); // styleに書いたmyStyleを適用させたい場合
+      // 緑色の外枠が付いて、文字のサイズを大きくした
+      // 外したい場合にはremoveClass
+
+      // attr htmlの属性の値を取得、変更できる
+      console.log($("a").attr('href')); // URLの取得 google.com
+      $("a").attr('href', 'http://google.co.jp'); // URLを変更
+      // data webサービスをする時に良く使う
+      console.log($("a").data('sitename')); // カスタム属性に付けた値を取得
+
+      // text
+      // html
+      // val
+      // remove, empty
+      $('h2').text('just changed'); // h2のテキストを書き換える
+      console.log($('h2').text()); // h2値の取得
+      $('h3').html('<a href="">click me!</a>');
+      // h3のテキストを変更し、リンクを付ける
+      console.log($('input').val()); // テキストボックスの値を取得 hello
+      $('input').val('hello, again!'); // テキストボックスの値を書き換える hello, again!
+      $('h4').empty(); // h4要素の中身をカラにする(h4要素自体はある)
+      $('h4').remove(); // h4要素自体を消す
+
+      // 要素を追加する
+      // before, after -> insertBefore, insertAfter
+      // prepend 子要素の先頭に追加する -> prependTo
+      // append 子要素の末尾に追加する -> appendTo
+
+      var li = $('<li>').text('just added'); // リストに入れるテキスト
+      // $('ul > li:eq(1)').before(li); // リストの二番目の前に入れる
+      li.insertBefore($('ul > li:eq(1)')); // 上に同じ
+      // $('ul > li:eq(1)').after(li); // リストの二番目の後に入れる
+      var li2 = $('<li>').text('先頭'); // リストに入れるテキスト
+      // $('ul').prepend(li2); // リストの先頭に追加
+      li2.prependTo($('ul')); // 上に同じ
+
+      // hide 消す
+      // show 現す
+      // fadeOut, fadeIn
+      // toggle
+      // $('#box').hide(); 普通に消す
+      // $('#box').hide('slow'); ゆっくり消す hide()に数値でも可 1000 = 1秒
+      // $('#box').fadeOut(1000);
+      $('#box').toggle(800); // 表示されていたら消す
+      $('#box').toggle(800); // 消されたら表示する
+      $('#box').toggle(800);
+      $('#box').toggle(800);
+      $('#box2').fadeOut(800, function() { // 消してから
+        alert("gone!"); // アラートを出す
+      });
+
+      // イベントのメソッド
+      // click
+      // mouseover, mouseout, mousemove
+      $('#box').click(function() { // クリックしたら
+        alert("click!"); // 処理
+      });
+      // $('#box').mouseover(function() { マウスを重ねたら
+        // $(this).css('background', 'green'); 箱の色を変える
+      // });
+      $('#box')
+        .mouseover(function() { // マウスを重ねたら
+          $(this).css('background', 'green'); // 箱の色を変える
+        })
+        .mouseout(function() { // マウスが外れたら
+          $(this).css('background', 'red'); // 箱の色を変える
+        });
+    });
+  </script>
+</body>
+</html>
